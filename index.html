@@ -3,154 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For You</title>
+    <title>For Ritu</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
+        :root {
+            --accent: #ff2d75;
+            --glass: rgba(255, 255, 255, 0.1);
+        }
+
         body {
             margin: 0;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%);
-            font-family: 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            background: radial-gradient(circle at center, #2d1b33 0%, #050505 100%);
+            font-family: 'Inter', sans-serif;
             overflow: hidden;
+            color: white;
         }
 
-        /* Floating Hearts */
-        .heart {
+        /* Ambient Glow Background */
+        .glow {
             position: absolute;
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 20px;
-            pointer-events: none;
-            animation: float 4s linear infinite;
+            width: 300px;
+            height: 300px;
+            background: var(--accent);
+            filter: blur(150px);
+            border-radius: 50%;
+            opacity: 0.2;
+            z-index: 1;
+            animation: move 10s infinite alternate;
         }
 
-        @keyframes float {
-            from { transform: translateY(100vh) rotate(0deg); opacity: 1; }
-            to { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        @keyframes move {
+            from { transform: translate(-50%, -50%); }
+            to { transform: translate(50%, 50%); }
         }
 
-        /* Glassmorphism Card */
+        /* Interactive 3D Card */
         .card {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 45px 30px;
-            border-radius: 25px;
+            background: var(--glass);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 50px 30px;
+            border-radius: 30px;
             text-align: center;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.5);
             width: 85%;
-            max-width: 400px;
+            max-width: 380px;
             z-index: 10;
+            transform-style: preserve-3d;
+            transition: transform 0.1s;
         }
 
-        h1 { color: white; font-size: 26px; margin-bottom: 10px; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        
-        .return-msg {
-            color: rgba(255,255,255,0.9);
-            font-size: 14px;
-            margin-bottom: 30px;
-            font-style: italic;
-            letter-spacing: 0.5px;
+        .icon-box {
+            font-size: 50px;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 10px var(--accent));
         }
 
-        .btn-container { display: flex; justify-content: center; gap: 15px; min-height: 50px; }
+        h1 {
+            font-size: 32px;
+            font-weight: 900;
+            margin: 0;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-size: 13px;
+            color: #aaa;
+            margin: 15px 0 35px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            min-height: 55px;
+        }
 
         button {
-            padding: 12px 35px;
+            padding: 15px 40px;
             font-size: 16px;
             border: none;
-            border-radius: 30px;
+            border-radius: 15px;
             cursor: pointer;
-            font-weight: 700;
-            transition: 0.3s ease;
+            font-weight: 800;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        #yes { background: #ff4d79; color: white; box-shadow: 0 4px 15px rgba(255, 77, 121, 0.3); }
-        #yes:hover { transform: scale(1.05); background: #ff3366; }
+        #yes {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 10px 20px rgba(255, 45, 117, 0.3);
+        }
 
-        #no { background: white; color: #ff4d79; }
+        #yes:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 15px 30px rgba(255, 45, 117, 0.5);
+        }
 
-        /* Success Message */
-        #success-msg { display: none; color: white; animation: fadeIn 0.8s ease; }
+        #no {
+            background: rgba(255,255,255,0.05);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Success State */
+        #success { display: none; animation: scaleIn 0.5s forwards; }
         
-        .sincere-msg { 
-            font-size: 18px; 
-            line-height: 1.6; 
-            font-weight: 500;
-            margin-top: 10px;
+        .result-text { font-size: 18px; line-height: 1.6; color: #ddd; }
+        .highlight { color: var(--accent); font-weight: 900; }
+
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        /* Particle Container */
+        #particles { position: absolute; top:0; left:0; width:100%; height:100%; z-index: 2; }
     </style>
 </head>
 <body>
 
-    <div id="heart-box"></div>
+    <div class="glow"></div>
+    <div id="particles"></div>
 
-    <div class="card">
-        <div id="content">
-            <div style="font-size: 50px; margin-bottom: 15px;">💍</div>
-            <h1>Ritu, will you be my valentine?</h1>
-            <p class="return-msg">I knew you will open this link again and Thank you for coming back</p>
+    <div class="card" id="card">
+        <div id="main-ui">
+            <div class="icon-box">✨</div>
+            <h1>Ritu, Valentine's?</h1>
+            <p class="subtitle">Glad you're back. 😉</p>
             
-            <div class="btn-container">
-                <button id="yes">YES</button>
-                <button id="no">No</button>
-            </div>
-        </div>
-
-        <div id="success-msg">
-            <div style="font-size: 55px; margin-bottom: 20px;">❤️</div>
-            <p class="sincere-msg">
-                I’m not big on flowery words, but I know this: life is just better with you in it. 
-                You're the person I want to share my wins with and the one I want by my side through everything else. 
-                I'm lucky to have you. Let's make it official.
-            </p>
-        </div>
-    </div>
-
-    <script>
-        // Floating Heart Particles
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
-            document.getElementById('heart-box').appendChild(heart);
-            setTimeout(() => heart.remove(), 4000);
-        }
-        setInterval(createHeart, 400);
-
-        // Dodging No Button
-        const noBtn = document.getElementById('no');
-        noBtn.addEventListener('mouseover', () => {
-            const x = Math.random() * (window.innerWidth - 100);
-            const y = Math.random() * (window.innerHeight - 50);
-            noBtn.style.position = 'fixed';
-            noBtn.style.left = x + "px";
-            noBtn.style.top = y + "px";
-        });
-
-        // Yes Button Action
-        document.getElementById('yes').addEventListener('click', () => {
-            document.getElementById('content').style.display = 'none';
-            document.getElementById('success-msg').style.display = 'block';
-            
-            // Celebration!
-            confetti({
-                particleCount: 150,
-                spread: 70,
-                origin: { y: 0.6 },
-                colors: ['#ff4d79', '#ffffff', '#ffafbd']
-            });
-        });
-    </script>
-</body>
-</html>
+            <div class="btn-group">
+                <button id="yes">YES</
