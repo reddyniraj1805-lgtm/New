@@ -3,9 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Ritu</title>
+    <title>For Ritu ❤️</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
+        :root {
+            --primary: #ff4d79;
+            --glass: rgba(255, 255, 255, 0.25);
+        }
+
         body {
             margin: 0;
             height: 100vh;
@@ -13,178 +18,191 @@
             justify-content: center;
             align-items: center;
             background: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             overflow: hidden;
         }
 
-        /* Floating background hearts */
-        .heart {
+        /* Ambient floating hearts */
+        .heart-particle {
             position: absolute;
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 20px;
+            color: rgba(255, 255, 255, 0.5);
             pointer-events: none;
             animation: float 4s linear infinite;
             z-index: 1;
         }
 
         @keyframes float {
-            from { transform: translateY(100vh) rotate(0deg); opacity: 1; }
-            to { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+            0% { transform: translateY(110vh) rotate(0deg) scale(0); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg) scale(1.5); opacity: 0; }
         }
 
-        /* The Interactive Card */
+        /* Glassmorphism Card */
         .card {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.4);
-            padding: 40px;
-            border-radius: 30px;
+            padding: 40px 30px;
+            border-radius: 35px;
             text-align: center;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            width: 85%;
-            max-width: 420px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            width: 88%;
+            max-width: 400px;
             z-index: 10;
+            transition: all 0.5s ease;
         }
 
-        h1 { color: white; font-size: 26px; margin-bottom: 5px; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        h1 { color: white; font-size: 28px; margin: 10px 0; text-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         
-        .welcome-back {
-            color: #ff4d79;
+        .welcome-msg {
+            color: var(--primary);
             font-size: 14px;
-            font-weight: bold;
+            font-weight: 700;
             margin-bottom: 30px;
-            line-height: 1.4;
+            line-height: 1.5;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .btn-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            min-height: 60px;
-            position: relative;
-        }
+        /* Buttons */
+        .btn-wrap { display: flex; justify-content: center; gap: 20px; min-height: 60px; }
 
         button {
-            padding: 12px 35px;
-            font-size: 16px;
+            padding: 14px 35px;
+            font-size: 17px;
             border: none;
-            border-radius: 25px;
+            border-radius: 50px;
             cursor: pointer;
-            font-weight: bold;
-            transition: 0.3s;
+            font-weight: 800;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         #yes {
-            background: #ff4d79;
+            background: var(--primary);
             color: white;
-            box-shadow: 0 5px 15px rgba(255, 77, 121, 0.3);
+            box-shadow: 0 10px 20px rgba(255, 77, 121, 0.4);
+            animation: pulse 1.5s infinite;
         }
 
-        #no {
-            background: white;
-            color: #ff4d79;
-            position: relative;
-            z-index: 999;
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
         }
 
-        /* Success Message Styling */
-        #success-msg { display: none; color: white; text-align: left; }
+        #no { background: white; color: var(--primary); }
+
+        /* Success View */
+        #success { display: none; text-align: left; animation: fadeIn 0.8s ease; }
         
-        .romantic-text {
-            font-size: 16px;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
+        .romantic-para { color: white; line-height: 1.6; margin-bottom: 20px; font-size: 16px; text-align: center; }
 
-        .plans {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 15px;
-            font-size: 15px;
-            font-weight: 500;
+        .list-container {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 20px;
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        .samosa-joke {
-            margin-top: 15px;
-            font-size: 18px;
-            font-weight: bold;
-            text-align: center;
+        .list-item {
+            display: flex;
+            align-items: center;
+            color: white;
+            margin: 12px 0;
+            font-weight: 600;
+            font-size: 15px;
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: slideIn 0.5s forwards;
         }
+
+        @keyframes slideIn {
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .food-footer {
+            margin-top: 25px;
+            color: white;
+            font-weight: 800;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <div id="heart-box"></div>
+    <div id="heart-bg"></div>
 
     <div class="card">
-        <div id="content">
-            <div style="font-size: 50px; margin-bottom: 10px;">❤️</div>
+        <div id="ask">
+            <div style="font-size: 60px;">❤️</div>
             <h1>Ritu, be my Valentine?</h1>
-            <p class="welcome-back">I knew you will come back here again and Thank you for opening the link again!</p>
+            <p class="welcome-msg">I knew you will come back here again and<br>Thank you for opening the link again!</p>
             
-            <div class="btn-container">
-                <button id="yes">Yes</button>
+            <div class="btn-wrap">
+                <button id="yes">YES!</button>
                 <button id="no">No</button>
             </div>
         </div>
 
-        <div id="success-msg">
+        <div id="success">
             <div style="font-size: 50px; text-align: center; margin-bottom: 15px;">❤️</div>
-            <p class="romantic-text">
-                Every part of me leans toward you. Your love has wrapped itself around my heart, and I never want to let go. 
+            <p class="romantic-para">
+                Every part of me leans toward you. Your love has wrapped itself around my heart, and I never want to let go.
             </p>
-            <div class="plans">
-                ❤️ Mountain treks & Beach sunsets<br>
-                ❤️ Late night movies<br>
-                ❤️ Exploring new places with you
+            
+            <div class="list-container">
+                <div class="list-item" style="animation-delay: 0.2s;">❤️ 1. More Dates 🕯️</div>
+                <div class="list-item" style="animation-delay: 0.4s;">❤️ 2. More Movies 🎬</div>
+                <div class="list-item" style="animation-delay: 0.6s;">❤️ 3. More Cafe Hoppings ☕</div>
+                <div class="list-item" style="animation-delay: 0.8s;">❤️ 4. More Shopping 🛍️</div>
+                <div class="list-item" style="animation-delay: 1.0s;">❤️ 5. More Pani Puri 🥘</div>
             </div>
-            <p class="samosa-joke">
-                And most importantly...<br>
+
+            <div class="food-footer">
                 Samosas & Parathas on repeat! ❤️😘🥹
-            </p>
+            </div>
         </div>
     </div>
 
     <script>
-        // Floating Heart Particles
-        function createHeart() {
+        // Particle Background
+        function createParticle() {
             const heart = document.createElement('div');
-            heart.classList.add('heart');
+            heart.classList.add('heart-particle');
             heart.innerHTML = '❤️';
             heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
-            document.getElementById('heart-box').appendChild(heart);
-            setTimeout(() => heart.remove(), 4000);
+            heart.style.fontSize = (Math.random() * 15 + 10) + 'px';
+            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            document.getElementById('heart-bg').appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
         }
-        setInterval(createHeart, 300);
+        setInterval(createParticle, 300);
 
-        // THE DODGING NO BUTTON
+        // Dodging Logic
         const noBtn = document.getElementById('no');
-        
-        const moveButton = () => {
+        const moveBtn = () => {
             const x = Math.random() * (window.innerWidth - 100);
             const y = Math.random() * (window.innerHeight - 50);
             noBtn.style.position = 'fixed';
             noBtn.style.left = x + 'px';
             noBtn.style.top = y + 'px';
         };
+        noBtn.addEventListener('mouseover', moveBtn);
+        noBtn.addEventListener('touchstart', moveBtn);
 
-        noBtn.addEventListener('mouseover', moveButton);
-        noBtn.addEventListener('touchstart', moveButton);
-
-        // YES BUTTON CLICK
+        // Success Logic
         document.getElementById('yes').addEventListener('click', () => {
-            document.getElementById('content').style.display = 'none';
-            document.getElementById('success-msg').style.display = 'block';
+            document.getElementById('ask').style.display = 'none';
+            document.getElementById('success').style.display = 'block';
             
-            // Confetti Explosion
             confetti({
                 particleCount: 150,
                 spread: 70,
                 origin: { y: 0.6 },
-                colors: ['#ff4d79', '#ffffff', '#ffc3a0']
+                colors: ['#ff4d79', '#ffffff', '#ffafbd']
             });
         });
     </script>
