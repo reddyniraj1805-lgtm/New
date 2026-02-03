@@ -36,6 +36,7 @@
         .card {
             background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.4);
             padding: 40px;
             border-radius: 30px;
@@ -97,11 +98,12 @@
         }
 
         .plans {
-            background: rgba(0,0,0,0.05);
+            background: rgba(255, 255, 255, 0.1);
             padding: 15px;
             border-radius: 15px;
             font-size: 15px;
             font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .samosa-joke {
@@ -118,9 +120,9 @@
 
     <div class="card">
         <div id="content">
-            <div style="font-size: 50px; margin-bottom: 10px;">💝</div>
+            <div style="font-size: 50px; margin-bottom: 10px;">❤️</div>
             <h1>Ritu, be my Valentine?</h1>
-            <p class="welcome-back">I knew you will come back here again and Thank for opening the link again!</p>
+            <p class="welcome-back">I knew you will come back here again and Thank you for opening the link again!</p>
             
             <div class="btn-container">
                 <button id="yes">Yes</button>
@@ -129,18 +131,18 @@
         </div>
 
         <div id="success-msg">
-            <div style="font-size: 50px; text-align: center; margin-bottom: 15px;">🚀✨</div>
+            <div style="font-size: 50px; text-align: center; margin-bottom: 15px;">❤️</div>
             <p class="romantic-text">
                 Every part of me leans toward you. Your love has wrapped itself around my heart, and I never want to let go. 
             </p>
             <div class="plans">
-                🏔️ Mountain treks & Beach sunsets<br>
-                🎬 Late night movies<br>
-                📍 Exploring new places with you
+                ❤️ Mountain treks & Beach sunsets<br>
+                ❤️ Late night movies<br>
+                ❤️ Exploring new places with you
             </div>
             <p class="samosa-joke">
                 And most importantly...<br>
-                Samosas & Parathas on repeat! 🥟😘🥹
+                Samosas & Parathas on repeat! ❤️😘🥹
             </p>
         </div>
     </div>
@@ -161,7 +163,6 @@
         // THE DODGING NO BUTTON
         const noBtn = document.getElementById('no');
         
-        // This makes the button jump when the mouse (or finger) gets near
         const moveButton = () => {
             const x = Math.random() * (window.innerWidth - 100);
             const y = Math.random() * (window.innerHeight - 50);
