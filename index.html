@@ -6,139 +6,186 @@
     <title>For Ritu</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        :root {
-            --accent: #ff2d75;
-            --glass: rgba(255, 255, 255, 0.1);
-        }
-
         body {
             margin: 0;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: #0a0a0a;
-            background: radial-gradient(circle at center, #2d1b33 0%, #050505 100%);
-            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden;
-            color: white;
         }
 
-        /* Ambient Glow Background */
-        .glow {
+        /* Floating background hearts */
+        .heart {
             position: absolute;
-            width: 300px;
-            height: 300px;
-            background: var(--accent);
-            filter: blur(150px);
-            border-radius: 50%;
-            opacity: 0.2;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 20px;
+            pointer-events: none;
+            animation: float 4s linear infinite;
             z-index: 1;
-            animation: move 10s infinite alternate;
         }
 
-        @keyframes move {
-            from { transform: translate(-50%, -50%); }
-            to { transform: translate(50%, 50%); }
+        @keyframes float {
+            from { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            to { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
 
-        /* Interactive 3D Card */
+        /* The Interactive Card */
         .card {
-            background: var(--glass);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 50px 30px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 40px;
             border-radius: 30px;
             text-align: center;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
             width: 85%;
-            max-width: 380px;
+            max-width: 420px;
             z-index: 10;
-            transform-style: preserve-3d;
-            transition: transform 0.1s;
         }
 
-        .icon-box {
-            font-size: 50px;
-            margin-bottom: 15px;
-            filter: drop-shadow(0 0 10px var(--accent));
+        h1 { color: white; font-size: 26px; margin-bottom: 5px; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        
+        .welcome-back {
+            color: #ff4d79;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            line-height: 1.4;
         }
 
-        h1 {
-            font-size: 32px;
-            font-weight: 900;
-            margin: 0;
-            letter-spacing: -1px;
-        }
-
-        .subtitle {
-            font-size: 13px;
-            color: #aaa;
-            margin: 15px 0 35px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .btn-group {
+        .btn-container {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            min-height: 55px;
+            gap: 20px;
+            min-height: 60px;
+            position: relative;
         }
 
         button {
-            padding: 15px 40px;
+            padding: 12px 35px;
             font-size: 16px;
             border: none;
-            border-radius: 15px;
+            border-radius: 25px;
             cursor: pointer;
-            font-weight: 800;
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-weight: bold;
+            transition: 0.3s;
         }
 
         #yes {
-            background: var(--accent);
+            background: #ff4d79;
             color: white;
-            box-shadow: 0 10px 20px rgba(255, 45, 117, 0.3);
-        }
-
-        #yes:hover {
-            transform: scale(1.1) translateY(-5px);
-            box-shadow: 0 15px 30px rgba(255, 45, 117, 0.5);
+            box-shadow: 0 5px 15px rgba(255, 77, 121, 0.3);
         }
 
         #no {
-            background: rgba(255,255,255,0.05);
-            color: white;
-            border: 1px solid rgba(255,255,255,0.1);
+            background: white;
+            color: #ff4d79;
+            position: relative;
+            z-index: 999;
         }
 
-        /* Success State */
-        #success { display: none; animation: scaleIn 0.5s forwards; }
+        /* Success Message Styling */
+        #success-msg { display: none; color: white; text-align: left; }
         
-        .result-text { font-size: 18px; line-height: 1.6; color: #ddd; }
-        .highlight { color: var(--accent); font-weight: 900; }
-
-        @keyframes scaleIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
+        .romantic-text {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 15px;
         }
 
-        /* Particle Container */
-        #particles { position: absolute; top:0; left:0; width:100%; height:100%; z-index: 2; }
+        .plans {
+            background: rgba(0,0,0,0.05);
+            padding: 15px;
+            border-radius: 15px;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .samosa-joke {
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 
-    <div class="glow"></div>
-    <div id="particles"></div>
+    <div id="heart-box"></div>
 
-    <div class="card" id="card">
-        <div id="main-ui">
-            <div class="icon-box">✨</div>
-            <h1>Ritu, Valentine's?</h1>
-            <p class="subtitle">Glad you're back. 😉</p>
+    <div class="card">
+        <div id="content">
+            <div style="font-size: 50px; margin-bottom: 10px;">💝</div>
+            <h1>Ritu, be my Valentine?</h1>
+            <p class="welcome-back">I knew you will come back here again and Thank for opening the link again!</p>
             
-            <div class="btn-group">
-                <button id="yes">YES</
+            <div class="btn-container">
+                <button id="yes">Yes</button>
+                <button id="no">No</button>
+            </div>
+        </div>
+
+        <div id="success-msg">
+            <div style="font-size: 50px; text-align: center; margin-bottom: 15px;">🚀✨</div>
+            <p class="romantic-text">
+                Every part of me leans toward you. Your love has wrapped itself around my heart, and I never want to let go. 
+            </p>
+            <div class="plans">
+                🏔️ Mountain treks & Beach sunsets<br>
+                🎬 Late night movies<br>
+                📍 Exploring new places with you
+            </div>
+            <p class="samosa-joke">
+                And most importantly...<br>
+                Samosas & Parathas on repeat! 🥟😘🥹
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Floating Heart Particles
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            document.getElementById('heart-box').appendChild(heart);
+            setTimeout(() => heart.remove(), 4000);
+        }
+        setInterval(createHeart, 300);
+
+        // THE DODGING NO BUTTON
+        const noBtn = document.getElementById('no');
+        
+        // This makes the button jump when the mouse (or finger) gets near
+        const moveButton = () => {
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 50);
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+        };
+
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('touchstart', moveButton);
+
+        // YES BUTTON CLICK
+        document.getElementById('yes').addEventListener('click', () => {
+            document.getElementById('content').style.display = 'none';
+            document.getElementById('success-msg').style.display = 'block';
+            
+            // Confetti Explosion
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#ff4d79', '#ffffff', '#ffc3a0']
+            });
+        });
+    </script>
+</body>
+</html>
